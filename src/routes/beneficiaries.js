@@ -12,6 +12,17 @@ module.exports = server => {
     }
   })
 
+  server.get('/beneficiaries/:id', async (req, res, next) => {
+    try {
+      const { id } = req.params
+      const beneficiary = await Beneficiary.findById(id)
+      res.send(beneficiary)
+      next()
+    } catch (err) {
+      return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))
+    }
+  })
+
   server.post('/beneficiaries', async (req, res, next) => {
     try {
       if (!req.is('application/json')) {
