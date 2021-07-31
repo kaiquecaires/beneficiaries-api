@@ -1,4 +1,5 @@
 const httpHelper = require('../helpers/http-helper')
+const MissingParamError = require('../errors/MissingParamError')
 
 class BeneficiariesController {
   constructor (beneficiariesRepository) {
@@ -8,18 +9,36 @@ class BeneficiariesController {
   async findAll () {
     try {
       const beneficiaries = await this.beneficiariesRepository.findAll()
-      return httpHelper.httpResponse(200, beneficiaries)
+      return httpHelper.success(beneficiaries)
     } catch (err) {
-      return httpHelper.httpResponse(err)
+      return httpHelper.serverError(err)
     }
   }
 
   async findById (id) {
     try {
       const beneficiary = await this.beneficiariesRepository.findById(id)
-      return httpHelper.httpResponse(200, beneficiary)
+      return httpHelper.success(beneficiary)
     } catch (err) {
-      return httpHelper.httpResponse(400, err)
+      return httpHelper.serverError(err)
+    }
+  }
+
+  async create (data) {
+    try {
+      const requiredFields = ['name', 'cpf', 'rg', 'date_of_birth']
+
+      for (const field of requiredFields) {
+        if (!data[field]) {
+          return httpHelper.badRequest(new MissingParamError(field))
+        }
+      }
+
+      await this.beneficiariesRepository.create(data)
+
+      return httpHelper.create()
+    } catch (err) {
+      return httpHelper.serverError(err)
     }
   }
 }

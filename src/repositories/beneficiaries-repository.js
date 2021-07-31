@@ -9,5 +9,10 @@ module.exports = {
   findById: async (id) => {
     const beneficiary = await Beneficiary.findById(id)
     return beneficiary
+  },
+
+  create: async (data) => {
+    const beneficiary = new Beneficiary(data)
+    await beneficiary.save()
   }
 }

@@ -20,27 +20,23 @@ module.exports = server => {
   })
 
   server.post('/beneficiaries', async (req, res, next) => {
-    try {
-      if (!req.is('application/json')) {
-        return next(new errors.InvalidContentError("Expects 'application/json'"))
-      }
-
-      const { name, cpf, rg, date_of_birth, type_of_plan } = req.body
-
-      const beneficiary = new Beneficiary({
-        name,
-        cpf,
-        rg,
-        date_of_birth,
-        type_of_plan
-      })
-
-      await beneficiary.save()
-      res.send(201)
-      next()
-    } catch (err) {
-      return next(new errors.InternalError(err.message))
+    if (!req.is('application/json')) {
+      return next(new errors.InvalidContentError("Expects 'application/json'"))
     }
+
+    const { name, cpf, rg, date_of_birth, type_of_plan } = req.body
+
+    const controller = new BeneficiariesController(beneficiariesRepository)
+    const { statusCode, body } = await controller.create({
+      name,
+      cpf,
+      rg,
+      date_of_birth,
+      type_of_plan
+    })
+
+    res.send(statusCode, body)
+    next()
   })
 
   server.put('/beneficiaries/:id', async (req, res, next) => {
