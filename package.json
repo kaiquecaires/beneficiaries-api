@@ -31,8 +31,8 @@
   },
   "scripts": {
     "test": "jest",
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "dependencies": {
     "mongoose": "^5.13.5",
