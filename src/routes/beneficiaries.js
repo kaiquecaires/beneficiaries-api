@@ -1,6 +1,6 @@
 const errors = require('restify-errors')
 const Beneficiary = require('../models/Beneficiary')
-const beneficiariesRepository = require('../repositories/beneficiaries')
+const beneficiariesRepository = require('../repositories/beneficiaries-repository')
 const BeneficiariesController = require('../controllers/BeneficiariesController')
 
 module.exports = server => {
@@ -12,14 +12,11 @@ module.exports = server => {
   })
 
   server.get('/beneficiaries/:id', async (req, res, next) => {
-    try {
-      const { id } = req.params
-      const beneficiary = await Beneficiary.findById(id)
-      res.send(beneficiary)
-      next()
-    } catch (err) {
-      return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))
-    }
+    const { id } = req.params
+    const controller = new BeneficiariesController(beneficiariesRepository)
+    const { statusCode, body } = await controller.findById(id)
+    res.send(statusCode, body)
+    next()
   })
 
   server.post('/beneficiaries', async (req, res, next) => {
