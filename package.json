@@ -32,7 +32,9 @@
   "scripts": {
     "test": "jest",
     "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/index.js",
+    "up": "docker-compose up -d",
+    "down": "docker-compose down"
   },
   "dependencies": {
     "cpf-cnpj-validator": "^1.0.3",

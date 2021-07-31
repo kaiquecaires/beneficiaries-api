@@ -1,0 +1,24 @@
+version: "3.2"
+services:
+  db:
+    image: mongo:4.2
+    container_name: db
+    restart: always
+    ports:
+      - 27017:27017
+  api:
+    image: node:14
+    container_name: api
+    restart: always
+    environment:
+      - MONGODB_URI=mongodb://db:27017
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: bash -c "npm run dev"
+    links:
+      - db
