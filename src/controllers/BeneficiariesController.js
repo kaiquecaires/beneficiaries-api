@@ -1,3 +1,5 @@
+const httpHelper = require('../helpers/http-helper')
+
 class BeneficiariesController {
   constructor (beneficiariesRepository) {
     this.beneficiariesRepository = beneficiariesRepository
@@ -6,30 +8,18 @@ class BeneficiariesController {
   async findAll () {
     try {
       const beneficiaries = await this.beneficiariesRepository.findAll()
-      return {
-        statusCode: 200,
-        body: beneficiaries
-      }
+      return httpHelper.httpResponse(200, beneficiaries)
     } catch (err) {
-      return {
-        statusCode: 500,
-        body: err
-      }
+      return httpHelper.httpResponse(err)
     }
   }
 
   async findById (id) {
     try {
       const beneficiary = await this.beneficiariesRepository.findById(id)
-      return {
-        statusCode: 200,
-        body: beneficiary
-      }
+      return httpHelper.httpResponse(200, beneficiary)
     } catch (err) {
-      return {
-        statusCode: 500,
-        body: err
-      }
+      return httpHelper.httpResponse(400, err)
     }
   }
 }
