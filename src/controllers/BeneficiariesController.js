@@ -1,4 +1,4 @@
-const httpHelper = require('../helpers/http-helper')
+const httpHelper = require('../helpers/httpHelper')
 const MissingParamError = require('../errors/MissingParamError')
 
 class BeneficiariesController {
