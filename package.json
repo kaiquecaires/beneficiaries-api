@@ -26,9 +26,18 @@
     "eslint-plugin-promise": "^5.1.0",
     "husky": "^4.3.0",
     "jest": "^27.0.6",
-    "lint-staged": "^11.1.1"
+    "lint-staged": "^11.1.1",
+    "nodemon": "^2.0.12"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "dependencies": {
+    "mongoose": "^5.13.5",
+    "mongoose-timestamp": "^0.6.0",
+    "restify": "^8.5.1",
+    "restify-errors": "^8.0.2"
   }
 }
