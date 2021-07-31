@@ -6,17 +6,27 @@
   "private": true,
   "husky": {
     "hooks": {
-      "pre-commit": "yarn test"
+      "pre-commit": "lint-staged"
     }
   },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix"
+    ],
+    "*.test.js": [
+      "cross-env CI=tru yarn test --bail --findRelatedTests"
+    ]
+  },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0",
     "husky": "^4.3.0",
-    "jest": "^27.0.6"
+    "jest": "^27.0.6",
+    "lint-staged": "^11.1.1"
   },
   "scripts": {
     "test": "jest"
