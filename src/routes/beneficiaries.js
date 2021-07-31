@@ -46,4 +46,18 @@ module.exports = server => {
       return next(new errors.InternalError(err.message))
     }
   })
+
+  server.put('/beneficiaries/:id', async (req, res, next) => {
+    try {
+      if (!req.is('application/json')) {
+        return next(new errors.InvalidContentError("Expects 'application/json'"))
+      }
+
+      await Beneficiary.findOneAndUpdate({ _id: req.params.id }, req.body)
+      res.send(200)
+      next()
+    } catch (err) {
+      return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))
+    }
+  })
 }
