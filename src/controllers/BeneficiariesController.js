@@ -95,6 +95,25 @@ class BeneficiariesController {
       return httpHelper.serverError(err)
     }
   }
+
+  async delete (id) {
+    try {
+      if (!id) {
+        return httpHelper.badRequest(new MissingParamError('id'))
+      }
+
+      const response = await this.findById(id)
+
+      if (!response.body) {
+        return httpHelper.badRequest(new InvalidParamError('id'))
+      }
+
+      this.beneficiariesRepository.delete(id)
+      return httpHelper.noContent()
+    } catch (err) {
+      return httpHelper.serverError(err)
+    }
+  }
 }
 
 module.exports = BeneficiariesController

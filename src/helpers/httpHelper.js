@@ -24,5 +24,11 @@ module.exports = {
     return {
       statusCode: 201
     }
+  },
+
+  noContent: () => {
+    return {
+      statusCode: 204
+    }
   }
 }

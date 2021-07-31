@@ -48,8 +48,9 @@ module.exports = server => {
 
   server.del('/beneficiaries/:id', async (req, res, next) => {
     try {
-      await Beneficiary.findOneAndRemove({ _id: req.params.id })
-      res.send(204)
+      const controller = new BeneficiariesController(beneficiariesRepository)
+      const { statusCode, body } = await controller.delete(req.params.id)
+      res.send(statusCode, body)
       next()
     } catch (err) {
       return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))

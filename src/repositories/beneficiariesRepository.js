@@ -38,5 +38,9 @@ module.exports = {
 
   update: async (id, data) => {
     await Beneficiary.findOneAndUpdate({ _id: id }, data)
+  },
+
+  delete: async (id) => {
+    await Beneficiary.findOneAndRemove({ _id: id })
   }
 }
