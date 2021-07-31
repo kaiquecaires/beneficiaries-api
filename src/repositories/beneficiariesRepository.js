@@ -11,6 +11,11 @@ module.exports = {
     return beneficiary
   },
 
+  findByCpf: async (cpf) => {
+    const beneficiary = await Beneficiary.findOne({ cpf })
+    return beneficiary
+  },
+
   create: async (data) => {
     const beneficiary = new Beneficiary(data)
     await beneficiary.save()
