@@ -23,6 +23,10 @@ const BeneficiarySchema = new mongoose.Schema({
     type: Date,
     required: true,
     trim: true
+  },
+  type_of_plan: {
+    type: String,
+    trim: true
   }
 })
 

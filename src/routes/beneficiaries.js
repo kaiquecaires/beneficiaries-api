@@ -18,13 +18,14 @@ module.exports = server => {
         return next(new errors.InvalidContentError("Expects 'application/json'"))
       }
 
-      const { name, cpf, rg, date_of_birth } = req.body
+      const { name, cpf, rg, date_of_birth, type_of_plan } = req.body
 
       const beneficiary = new Beneficiary({
         name,
         cpf,
         rg,
-        date_of_birth
+        date_of_birth,
+        type_of_plan
       })
 
       await beneficiary.save()
