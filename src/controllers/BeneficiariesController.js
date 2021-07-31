@@ -41,7 +41,7 @@ class BeneficiariesController {
         return httpHelper.badRequest(new InvalidParamError('cpf'))
       }
 
-      if (!isoDateValidator(data.date_of_birth)) {
+      if (!isoDateValidator(data.date_of_birth) || new Date(data.date_of_birth) > new Date()) {
         return httpHelper.badRequest(new InvalidParamError('date_of_birth'))
       }
 
