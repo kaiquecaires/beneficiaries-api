@@ -13,6 +13,7 @@
   },
   "rules": {
     "indent": ["error", 2],
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "camelcase": "off"
   }
 }
