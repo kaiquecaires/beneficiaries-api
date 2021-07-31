@@ -19,5 +19,9 @@ module.exports = {
   create: async (data) => {
     const beneficiary = new Beneficiary(data)
     await beneficiary.save()
+  },
+
+  update: async (id, data) => {
+    await Beneficiary.findOneAndUpdate({ _id: id }, data)
   }
 }

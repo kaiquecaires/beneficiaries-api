@@ -23,9 +23,7 @@ module.exports = server => {
     if (!req.is('application/json')) {
       return next(new errors.InvalidContentError("Expects 'application/json'"))
     }
-
     const { name, cpf, rg, date_of_birth, type_of_plan } = req.body
-
     const controller = new BeneficiariesController(beneficiariesRepository)
     const { statusCode, body } = await controller.create({
       name,
@@ -34,23 +32,18 @@ module.exports = server => {
       date_of_birth,
       type_of_plan
     })
-
     res.send(statusCode, body)
     next()
   })
 
   server.put('/beneficiaries/:id', async (req, res, next) => {
-    try {
-      if (!req.is('application/json')) {
-        return next(new errors.InvalidContentError("Expects 'application/json'"))
-      }
-
-      await Beneficiary.findOneAndUpdate({ _id: req.params.id }, req.body)
-      res.send(200)
-      next()
-    } catch (err) {
-      return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))
+    if (!req.is('application/json')) {
+      return next(new errors.InvalidContentError("Expects 'application/json'"))
     }
+    const controller = new BeneficiariesController(beneficiariesRepository)
+    const { statusCode, body } = await controller.update(req.params.id, req.body)
+    res.send(statusCode, body)
+    next()
   })
 
   server.del('/beneficiaries/:id', async (req, res, next) => {

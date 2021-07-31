@@ -58,6 +58,37 @@ class BeneficiariesController {
       return httpHelper.serverError(err)
     }
   }
+
+  async update (id, data) {
+    try {
+      if (!id) {
+        return httpHelper.badRequest(new MissingParamError('id'))
+      }
+
+      const beneficiary = await this.findById(id)
+
+      if (!beneficiary.body) {
+        return httpHelper.badRequest(new InvalidParamError('id'))
+      }
+
+      if (data.cpf) {
+        if (!cpfValidator(data.cpf)) {
+          return httpHelper.badRequest(new InvalidParamError('cpf'))
+        }
+      }
+
+      if (data.date_of_birth) {
+        if (!isoDateValidator(data.date_of_birth) || new Date(data.date_of_birth) > new Date()) {
+          return httpHelper.badRequest(new InvalidParamError('date_of_birth'))
+        }
+      }
+
+      await this.beneficiariesRepository.update(id, data)
+      return httpHelper.success()
+    } catch (err) {
+      return httpHelper.serverError(err)
+    }
+  }
 }
 
 module.exports = BeneficiariesController
