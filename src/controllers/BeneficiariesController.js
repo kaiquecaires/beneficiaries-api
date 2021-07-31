@@ -1,15 +1,19 @@
-const Beneficiary = require('../models/Beneficiary')
-
 class BeneficiariesController {
-  async getAll (req, res, next) {
+  constructor (beneficiariesRepository) {
+    this.beneficiariesRepository = beneficiariesRepository
+  }
+
+  async findAll () {
     try {
-      const beneficiaries = await Beneficiary.find({})
-      res.send(beneficiaries)
-      next()
+      const beneficiaries = await this.beneficiariesRepository.findAll()
+      return {
+        statusCode: 200,
+        body: beneficiaries
+      }
     } catch (err) {
       return new Error(err)
     }
   }
 }
 
-module.exports = new BeneficiariesController()
+module.exports = BeneficiariesController

@@ -1,9 +1,15 @@
 const errors = require('restify-errors')
 const Beneficiary = require('../models/Beneficiary')
+const beneficiariesRepository = require('../repositories/beneficiaries')
 const BeneficiariesController = require('../controllers/BeneficiariesController')
 
 module.exports = server => {
-  server.get('/beneficiaries', BeneficiariesController.getAll)
+  server.get('/beneficiaries', async (req, res, next) => {
+    const controller = new BeneficiariesController(beneficiariesRepository)
+    const { statusCode, body } = await controller.findAll()
+    res.send(statusCode, body)
+    next()
+  })
 
   server.get('/beneficiaries/:id', async (req, res, next) => {
     try {
