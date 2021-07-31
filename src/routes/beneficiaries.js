@@ -1,6 +1,6 @@
 const errors = require('restify-errors')
 const Beneficiary = require('../models/Beneficiary')
-const beneficiariesRepository = require('../repositories/beneficiaries-repository')
+const beneficiariesRepository = require('../repositories/beneficiariesRepository')
 const BeneficiariesController = require('../controllers/BeneficiariesController')
 
 module.exports = server => {
