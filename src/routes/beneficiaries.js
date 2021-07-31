@@ -60,4 +60,14 @@ module.exports = server => {
       return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))
     }
   })
+
+  server.del('/beneficiaries/:id', async (req, res, next) => {
+    try {
+      await Beneficiary.findOneAndRemove({ _id: req.params.id })
+      res.send(204)
+      next()
+    } catch (err) {
+      return next(new errors.ResourceNotFoundError(`There is no beneficiary with the id of ${req.params.id}`))
+    }
+  })
 }
