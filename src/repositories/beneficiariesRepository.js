@@ -11,6 +11,21 @@ module.exports = {
     return beneficiary
   },
 
+  findCpfInDifferentId: async (id, cpf) => {
+    const beneficiary = await Beneficiary.find({
+      $and: [
+        { cpf: cpf },
+        {
+          _id: {
+            $nin: [id]
+          }
+        }
+      ]
+    })
+
+    return beneficiary
+  },
+
   findByCpf: async (cpf) => {
     const beneficiary = await Beneficiary.findOne({ cpf })
     return beneficiary

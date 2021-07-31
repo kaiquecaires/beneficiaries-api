@@ -75,6 +75,12 @@ class BeneficiariesController {
         if (!cpfValidator(data.cpf)) {
           return httpHelper.badRequest(new InvalidParamError('cpf'))
         }
+
+        const cpfAlreadyExists = await this.beneficiariesRepository.findCpfInDifferentId(id, data.cpf)
+
+        if (cpfAlreadyExists.length > 0) {
+          return httpHelper.badRequest({ message: 'cpf already exists' })
+        }
       }
 
       if (data.date_of_birth) {
