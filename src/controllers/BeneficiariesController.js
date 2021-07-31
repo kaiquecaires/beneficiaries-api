@@ -1,5 +1,7 @@
 const httpHelper = require('../helpers/httpHelper')
 const MissingParamError = require('../errors/MissingParamError')
+const InvalidParamError = require('../errors/InvalidParamError')
+const cpfValidator = require('../validators/cpfValidator')
 
 class BeneficiariesController {
   constructor (beneficiariesRepository) {
@@ -32,6 +34,10 @@ class BeneficiariesController {
         if (!data[field]) {
           return httpHelper.badRequest(new MissingParamError(field))
         }
+      }
+
+      if (!cpfValidator(data.cpf)) {
+        return httpHelper.badRequest(new InvalidParamError('cpf'))
       }
 
       await this.beneficiariesRepository.create(data)

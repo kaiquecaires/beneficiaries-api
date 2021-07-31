@@ -35,6 +35,7 @@
     "dev": "nodemon src/index.js"
   },
   "dependencies": {
+    "cpf-cnpj-validator": "^1.0.3",
     "mongoose": "^5.13.5",
     "mongoose-timestamp": "^0.6.0",
     "restify": "^8.5.1",
