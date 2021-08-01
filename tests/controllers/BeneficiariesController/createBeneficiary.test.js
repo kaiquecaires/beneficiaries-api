@@ -49,4 +49,11 @@ describe('Test create function in BeneficiaryController', () => {
     const httpResponse = await beneficiaryController.create(httpRequest.body)
     expect(httpResponse.statusCode).toBe(400)
   })
+
+  test('Should return status code 400 if type_of_plan is not provided', async () => {
+    const { beneficiaryController } = makeSut()
+    httpRequest.body.type_of_plan = null
+    const httpResponse = await beneficiaryController.create(httpRequest.body)
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
