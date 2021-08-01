@@ -40,7 +40,7 @@ class BeneficiariesController {
       const typesOfPlanAccepted = ['Basic', 'Standard', 'Premium']
 
       if (!typesOfPlanAccepted.includes(data.type_of_plan)) {
-        return httpHelper.badRequest(new InvalidParamError('type_of_plan'))
+        return httpHelper.badRequest({ message: 'Invalid plan, valid plans: Basic, Standard, Premium' })
       }
 
       if (!cpfValidator(data.cpf)) {
