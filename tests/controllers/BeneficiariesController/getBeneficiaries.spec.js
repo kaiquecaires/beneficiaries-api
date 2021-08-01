@@ -38,6 +38,21 @@ describe('Test findById and findAll function in BeneficiaryController', () => {
     expect(httpResponse.statusCode).toBe(500)
   })
 
+  test('Should return status code 500 if beneficiary repository findAll throws', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    jest.spyOn(fakeBeneficiaryRepository, 'findAll').mockImplementation(() => {
+      throw new Error()
+    })
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const httpRequest2 = makeHttpRequest()
+    httpRequest2.body.cpf = '70334208033'
+    await beneficiaryController.create(httpRequest2.body)
+    const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest2.body.cpf)
+    const httpResponse = await beneficiaryController.findAll(beneficiary._id)
+    expect(httpResponse.statusCode).toBe(500)
+  })
+
   test('Should return all beneficiaries', async () => {
     const { beneficiaryController } = makeSut()
     const httpRequest = makeHttpRequest()
