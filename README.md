@@ -9,7 +9,7 @@ com alguns dados básicos:
  *  Número de dependentes (este campo pode ser vazio ou não);
 
 # Como rodar?
-  ### Para rodar sem o docker (Necessita do mongodb rodando na porta 2701) rode o comando: </br></br>
+  ### Para rodar sem o docker (Necessita do mongodb rodando na porta 27017) rode o comando: </br></br>
   <blockquote>
     <code>npm run start</code>
     </br> ou </br>
@@ -19,17 +19,17 @@ com alguns dados básicos:
 
   ### Para rodar a API através do Docker: </br></br>
   <blockquote>
-    <code>npm run up </code> (para iniciar o servidor)
+    <code>npm run up</code> (para iniciar o servidor)
     </br> ou </br>
-    <code> yarn up </code> (para iniciar o servidor) </br>
+    <code>yarn up</code> (para iniciar o servidor) </br>
   </blockquote>
   </br>
 
   ### Para pausar a API através do docker: </br></br>
   <blockquote>
-    <code>npm run down </code> (para pausar o servidor)
+    <code>npm run down</code> (para pausar o servidor)
     </br> ou </br>
-    <code>yarn down </code> (para pausar o servidor) </br>
+    <code>yarn down</code> (para pausar o servidor) </br>
   </blockquote>
   </br>
 
