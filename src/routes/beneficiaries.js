@@ -23,14 +23,15 @@ module.exports = server => {
     if (!req.is('application/json')) {
       return next(new errors.InvalidContentError("Expects 'application/json'"))
     }
-    const { name, cpf, rg, date_of_birth, type_of_plan } = req.body
+    const { name, cpf, rg, date_of_birth, type_of_plan, number_of_dependents } = req.body
     const controller = new BeneficiariesController(beneficiariesRepository)
     const { statusCode, body } = await controller.create({
       name,
       cpf,
       rg,
       date_of_birth,
-      type_of_plan
+      type_of_plan,
+      number_of_dependents
     })
     res.send(statusCode, body)
     next()

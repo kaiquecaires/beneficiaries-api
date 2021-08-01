@@ -26,7 +26,13 @@ const BeneficiarySchema = new mongoose.Schema({
   },
   type_of_plan: {
     type: String,
-    trim: true
+    trim: true,
+    required: true
+  },
+  number_of_dependents: {
+    type: Number,
+    trim: true,
+    default: 0
   }
 })
 

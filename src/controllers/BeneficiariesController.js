@@ -29,12 +29,18 @@ class BeneficiariesController {
 
   async create (data) {
     try {
-      const requiredFields = ['name', 'cpf', 'rg', 'date_of_birth']
+      const requiredFields = ['name', 'cpf', 'rg', 'date_of_birth', 'type_of_plan']
 
       for (const field of requiredFields) {
         if (!data[field]) {
           return httpHelper.badRequest(new MissingParamError(field))
         }
+      }
+
+      const typesOfPlanAccepted = ['Basic', 'Standard', 'Premium']
+
+      if (!typesOfPlanAccepted.includes(data.type_of_plan)) {
+        return httpHelper.badRequest(new InvalidParamError('type_of_plan'))
       }
 
       if (!cpfValidator(data.cpf)) {
@@ -86,6 +92,14 @@ class BeneficiariesController {
       if (data.date_of_birth) {
         if (!isoDateValidator(data.date_of_birth) || new Date(data.date_of_birth) > new Date()) {
           return httpHelper.badRequest(new InvalidParamError('date_of_birth'))
+        }
+      }
+
+      if (data.type_of_plan) {
+        const typesOfPlanAccepted = ['Basic', 'Standard', 'Premium']
+
+        if (!typesOfPlanAccepted.includes(data.type_of_plan)) {
+          return httpHelper.badRequest(new InvalidParamError('type_of_plan'))
         }
       }
 
