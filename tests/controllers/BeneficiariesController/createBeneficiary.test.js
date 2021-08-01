@@ -69,4 +69,12 @@ describe('Test create function in BeneficiaryController', () => {
     const httpResponse = await beneficiaryController.create(httpRequest.body)
     expect(httpResponse.statusCode).toBe(400)
   })
+
+  test('Should return status code 400 if cpf already exists', async () => {
+    const { beneficiaryController } = makeSut()
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const httpResponse = await beneficiaryController.create(httpRequest.body)
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
