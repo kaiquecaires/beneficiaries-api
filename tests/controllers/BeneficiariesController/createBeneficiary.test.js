@@ -85,7 +85,6 @@ describe('Test create function in BeneficiaryController', () => {
       throw new Error()
     })
     const httpRequest = makeHttpRequest()
-    await beneficiaryController.create(httpRequest.body)
     const httpResponse = await beneficiaryController.create(httpRequest.body)
     expect(httpResponse.statusCode).toBe(500)
   })
@@ -96,8 +95,14 @@ describe('Test create function in BeneficiaryController', () => {
       throw new Error()
     })
     const httpRequest = makeHttpRequest()
-    await beneficiaryController.create(httpRequest.body)
     const httpResponse = await beneficiaryController.create(httpRequest.body)
     expect(httpResponse.statusCode).toBe(500)
+  })
+
+  test('Should return status code 201 if the beneficiary was created successfully', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    const httpRequest = makeHttpRequest()
+    const httpResponse = await beneficiaryController.create(httpRequest.body)
+    expect(httpResponse.statusCode).toBe(201)
   })
 })
