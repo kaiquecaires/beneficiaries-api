@@ -18,7 +18,6 @@ class FakeBeneficiaryRepository {
   async findCpfInDifferentId (id, cpf) {
     return new Promise(resolve => {
       const findCpfInDifferentId = this.beneficiaries.find(beneficiary => beneficiary.cpf === cpf && beneficiary._id !== id)
-      console.log(findCpfInDifferentId)
       findCpfInDifferentId ? resolve(findCpfInDifferentId) : resolve([])
     })
   }
@@ -35,6 +34,11 @@ class FakeBeneficiaryRepository {
 
   async findAll () {
     return new Promise(resolve => resolve(this.beneficiaries))
+  }
+
+  async delete (id) {
+    const newBeneficiaries = this.beneficiaries.filter(beneficary => beneficary._id !== id)
+    this.beneficiaries = newBeneficiaries
   }
 }
 
