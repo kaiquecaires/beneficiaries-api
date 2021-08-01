@@ -14,7 +14,7 @@
       "eslint --fix"
     ],
     "*.test.js": [
-      "cross-env CI=tru yarn test --bail --findRelatedTests"
+      "cross-env CI=tru yarn test:commit --bail --findRelatedTests"
     ]
   },
   "devDependencies": {
@@ -31,6 +31,8 @@
   },
   "scripts": {
     "test": "jest",
+    "test:dev": "jest --coverage=false --silent --noStackTrace --watch",
+    "test:commit": "jest --coverage=false --noStackTrace",
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "up": "docker-compose up -d",
