@@ -53,6 +53,18 @@ describe('Test update function in BeneficiaryController', () => {
     expect(httpReponse.statusCode).toBe(400)
   })
 
+  test('Should return 500 if update repository throws', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    jest.spyOn(fakeBeneficiaryRepository, 'update').mockImplementation(() => {
+      throw new Error()
+    })
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
+    const httpReponse = await beneficiaryController.update(beneficiary._id, httpRequest.body)
+    expect(httpReponse.statusCode).toBe(500)
+  })
+
   test('Should be able update beneficiary', async () => {
     const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
     const httpRequest = makeHttpRequest()
