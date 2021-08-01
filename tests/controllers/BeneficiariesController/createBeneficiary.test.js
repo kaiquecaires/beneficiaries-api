@@ -6,7 +6,8 @@ const makeSut = () => {
   const beneficiaryController = new BeneficiaryController(fakeBeneficiaryRepository)
 
   return {
-    beneficiaryController
+    beneficiaryController,
+    fakeBeneficiaryRepository
   }
 }
 
@@ -76,5 +77,16 @@ describe('Test create function in BeneficiaryController', () => {
     await beneficiaryController.create(httpRequest.body)
     const httpResponse = await beneficiaryController.create(httpRequest.body)
     expect(httpResponse.statusCode).toBe(400)
+  })
+
+  test('Should return status code 500 if create in beneficiariesRepository throws', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    jest.spyOn(fakeBeneficiaryRepository, 'create').mockImplementation(() => {
+      throw new Error()
+    })
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const httpResponse = await beneficiaryController.create(httpRequest.body)
+    expect(httpResponse.statusCode).toBe(500)
   })
 })
