@@ -15,7 +15,11 @@ module.exports = server => {
     const { id } = req.params
     const controller = new BeneficiariesController(beneficiariesRepository)
     const { statusCode, body } = await controller.findById(id)
-    res.send(statusCode, body)
+    if (!body) {
+      res.send(statusCode)
+    } else {
+      res.send(statusCode, body)
+    }
     next()
   })
 
