@@ -23,6 +23,26 @@ const makeHttpRequest = () => ({
 })
 
 describe('Test update function in BeneficiaryController', () => {
+  test('Sould return 400 if invalid cpf is provided', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
+    httpRequest.body.cpf = 'invalid_cpf'
+    const httpReponse = await beneficiaryController.update(beneficiary._id, httpRequest.body)
+    expect(httpReponse.statusCode).toBe(400)
+  })
+
+  test('Sould return 400 if invalid date_of_birth is provided', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
+    httpRequest.body.date_of_birth = 'invalid_cpf'
+    const httpReponse = await beneficiaryController.update(beneficiary._id, httpRequest.body)
+    expect(httpReponse.statusCode).toBe(400)
+  })
+
   test('Should be able update beneficiary', async () => {
     const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
     const httpRequest = makeHttpRequest()

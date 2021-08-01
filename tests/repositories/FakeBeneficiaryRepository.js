@@ -5,9 +5,10 @@ class FakeBeneficiaryRepository {
 
   async create (data) {
     const newData = Object.assign(data, {
-      _id: new Date().getTime()
+      _id: `${parseInt(new Date().getTime() * (Math.random() * 10))}`
     })
-    return new Promise(resolve => resolve(this.beneficiaries.push(newData)))
+    this.beneficiaries.push(newData)
+    return new Promise(resolve => resolve(true))
   }
 
   async findByCpf (cpf) {
@@ -17,6 +18,7 @@ class FakeBeneficiaryRepository {
   async findCpfInDifferentId (id, cpf) {
     return new Promise(resolve => {
       const findCpfInDifferentId = this.beneficiaries.find(beneficiary => beneficiary.cpf === cpf && beneficiary._id !== id)
+      console.log(findCpfInDifferentId)
       findCpfInDifferentId ? resolve(findCpfInDifferentId) : resolve([])
     })
   }
@@ -29,6 +31,10 @@ class FakeBeneficiaryRepository {
         this.beneficiaries[index][field] = data[field]
       }
     }
+  }
+
+  async findAll () {
+    return new Promise(resolve => resolve(this.beneficiaries))
   }
 }
 
