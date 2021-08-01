@@ -32,4 +32,12 @@ describe('Test delete function in BeneficiaryController', () => {
     await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
     expect(httpResponse.statusCode).toBe(204)
   })
+
+  test('Should return status code 400 if id is not provided', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    const httpRequest = makeHttpRequest()
+    const httpResponse = await beneficiaryController.delete(null)
+    await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
+    expect(httpResponse.statusCode).toBe(400)
+  })
 })
