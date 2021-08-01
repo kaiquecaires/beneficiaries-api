@@ -34,4 +34,17 @@ describe('Test findById and findAll function in BeneficiaryController', () => {
     expect(httpResponse.statusCode).toBe(200)
     expect(httpResponse.body.length).toBe(2)
   })
+
+  test('Should return a specific beneficiary', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const httpRequest2 = makeHttpRequest()
+    httpRequest2.body.cpf = '70334208033'
+    await beneficiaryController.create(httpRequest2.body)
+    const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest2.body.cpf)
+    const httpResponse = await beneficiaryController.findById(beneficiary._id)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual(beneficiary)
+  })
 })

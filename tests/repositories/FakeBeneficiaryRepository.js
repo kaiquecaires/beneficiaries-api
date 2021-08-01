@@ -11,6 +11,10 @@ class FakeBeneficiaryRepository {
     return new Promise(resolve => resolve(true))
   }
 
+  async findById (id) {
+    return new Promise(resolve => resolve(this.beneficiaries.find(beneficiary => beneficiary._id === id)))
+  }
+
   async findByCpf (cpf) {
     return new Promise(resolve => resolve(this.beneficiaries.find(beneficiary => beneficiary.cpf === cpf)))
   }
