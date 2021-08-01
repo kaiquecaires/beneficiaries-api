@@ -38,7 +38,17 @@ describe('Test update function in BeneficiaryController', () => {
     const httpRequest = makeHttpRequest()
     await beneficiaryController.create(httpRequest.body)
     const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
-    httpRequest.body.date_of_birth = 'invalid_cpf'
+    httpRequest.body.date_of_birth = 'invalid_date_of_birth'
+    const httpReponse = await beneficiaryController.update(beneficiary._id, httpRequest.body)
+    expect(httpReponse.statusCode).toBe(400)
+  })
+
+  test('Should return 400 if invalid type_of_plan is provided', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const beneficiary = await fakeBeneficiaryRepository.findByCpf(httpRequest.body.cpf)
+    httpRequest.body.type_of_plan = 'invalid_type_of_plan'
     const httpReponse = await beneficiaryController.update(beneficiary._id, httpRequest.body)
     expect(httpReponse.statusCode).toBe(400)
   })
