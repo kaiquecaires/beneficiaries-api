@@ -89,4 +89,15 @@ describe('Test create function in BeneficiaryController', () => {
     const httpResponse = await beneficiaryController.create(httpRequest.body)
     expect(httpResponse.statusCode).toBe(500)
   })
+
+  test('Should return status code 500 if findByCpf in beneficiariesRepository throws', async () => {
+    const { beneficiaryController, fakeBeneficiaryRepository } = makeSut()
+    jest.spyOn(fakeBeneficiaryRepository, 'findByCpf').mockImplementation(() => {
+      throw new Error()
+    })
+    const httpRequest = makeHttpRequest()
+    await beneficiaryController.create(httpRequest.body)
+    const httpResponse = await beneficiaryController.create(httpRequest.body)
+    expect(httpResponse.statusCode).toBe(500)
+  })
 })
