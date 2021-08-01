@@ -9,7 +9,7 @@ com alguns dados básicos:
  *  Número de dependentes (este campo pode ser vazio ou não);
 
 # Como rodar?
-  ### Para rodar sem o docker (Necessita do mongodb rodando na porta 27017) rode o comando: </br></br>
+  ### Para rodar sem o docker (Necessita do mongodb rodando na porta 27017) execute o comando: </br></br>
   <blockquote>
     <code>npm run start</code>
     </br> ou </br>
