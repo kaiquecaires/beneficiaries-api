@@ -9,6 +9,12 @@ com alguns dados básicos:
  *  Número de dependentes (este campo pode ser vazio ou não);
 
 # Como rodar?
+  ### Primeiro, clone o projeto, com o seguinte comando:
+  <blockquote>
+    <code>git clone https://github.com/kaiquecaires/beneficiaries-api.git</code>
+  </blockquote>
+  </br>
+
   ### Para rodar sem o docker (Necessita do mongodb rodando na porta 27017) execute o comando: </br></br>
   <blockquote>
     <code>npm run start</code>
